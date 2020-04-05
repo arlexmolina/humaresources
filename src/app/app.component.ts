@@ -13,7 +13,7 @@ import './_content/app.less';
 })
 export class AppComponent {
   currentUser: User;
-  title = 'HumanResources';
+  title = 'Recursos Humanos';
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService

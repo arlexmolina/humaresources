@@ -15,13 +15,19 @@ import { AlertComponent } from './_components/alert.component';
 import {ErrorInterceptor} from './_helpers/error.interceptor';
 import {fakeBackendProvider} from './_helpers/fake-backend';
 import {JwtInterceptor} from './_helpers/jwt.interceptor';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { UserInviteComponent } from './user-invite/user-invite.component';
+import { UserAddComponent } from './user-add/user-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     LoginComponent,
-    AlertComponent
+    AlertComponent,
+    UserEditComponent,
+    UserInviteComponent,
+    UserAddComponent
   ],
   imports: [
     BrowserModule,

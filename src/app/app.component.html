@@ -1,12 +1,13 @@
 <mat-toolbar color="primary">
   <p>
-    <span>Welcome to {{title}}!</span>
+    <span>Bienvenido a {{title}}!</span>
   </p>
 </mat-toolbar>
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
   <div class="navbar-nav">
-    <a class="nav-item nav-link" routerLink="/">Home</a>
-    <a class="nav-item nav-link" (click)="logout()">Logout</a>
+    <a class="nav-item nav-link" routerLink="/menu">Menu</a>
+    <br>
+    <a class="nav-item nav-link" (click)="logout()">Salir</a>
   </div>
 </nav>
 
