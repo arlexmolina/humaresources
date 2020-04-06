@@ -27,6 +27,10 @@ export class UserInviteComponent implements OnInit {
     if (!this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
+    // tslint:disable-next-line:triple-equals
+    if (this.authenticationService.currentUserValue.worker.role != 'admin') {
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnInit() {

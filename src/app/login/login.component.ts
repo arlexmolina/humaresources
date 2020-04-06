@@ -56,17 +56,27 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          const currentUser = this.authenticationService.currentUserValue;
-          this.router.navigate(['/menu']);
-          // tslint:disable-next-line:triple-equals
-          if (currentUser && currentUser.worker.role == 'admin') {
-            this.router.navigate(['/menu']);
+          console.log('data');
+          console.log(data);
+          if (data.error) {
+            this.alertService.error(data.error);
+            this.loading = false;
           } else {
-            this.router.navigate(['/menu-user']);
+            const currentUser = this.authenticationService.currentUserValue;
+            this.router.navigate(['/menu']);
+            // tslint:disable-next-line:triple-equals
+            if (currentUser && currentUser.worker.role == 'admin') {
+              this.router.navigate(['/menu']);
+            } else if (data.errors) {
+              this.alertService.error(data.errors.join(' -- '));
+              this.loading = false;
+            } else {
+              this.router.navigate(['/menu-user']);
+            }
           }
         },
         error => {
-          console.log('error');
+          console.log('error2121');
           console.log(error);
           this.alertService.error(error);
           this.loading = false;

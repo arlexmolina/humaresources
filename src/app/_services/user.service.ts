@@ -17,8 +17,6 @@ export class UserService {
   create(names, last_names, mobile, dni, gender, birthday, email, password) {
     return this.http.post<any>(this.API_CREATE, { names, last_names, mobile, dni, gender, birthday, email, password })
       .pipe(map(data => {
-        console.log('data');
-        console.log(data);
         return data;
       }));
   }
