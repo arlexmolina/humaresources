@@ -47,13 +47,25 @@
     </select>
     <br>
   </div>
-  <div class="form-group">
+  <!--<div class="form-group">
     <label for="birthday">Fecha de naciemiento</label>
     <input type="text" formControlName="birthday" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.birthday.errors }" />
     <div *ngIf="submitted && f.birthday.errors" class="invalid-feedback">
       <div *ngIf="f.birthday.errors.required">Telefono es un campo obligatorio</div>
     </div>
+  </div>-->
+
+  <div class="form-group">
+    <label for="birthday">Fecha de naciemiento</label>
+    <br>
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="Fecha"
+             (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
   </div>
+
   <div class="form-group">
     <label for="username">Email</label>
     <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />

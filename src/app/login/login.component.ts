@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {first} from 'rxjs/operators';
 
-import { AuthenticationService } from '../_services/authentication.service';
-import { AlertService } from '../_services/alert.service';
+import {AuthenticationService} from '../_services/authentication.service';
+import {AlertService} from '../_services/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
     private alertService: AlertService
   ) {
     if (this.authenticationService.currentUserValue) {
+      authenticationService.logout();
       this.router.navigate(['/']);
     }
   }
@@ -56,8 +57,6 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          console.log('data');
-          console.log(data);
           if (data.error) {
             this.alertService.error(data.error);
             this.loading = false;
@@ -76,8 +75,6 @@ export class LoginComponent implements OnInit {
           }
         },
         error => {
-          console.log('error2121');
-          console.log(error);
           this.alertService.error(error);
           this.loading = false;
         });

@@ -9,8 +9,6 @@ let users = JSON.parse(localStorage.getItem('users')) || [];
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log('intercept:');
-        console.log(next);
         const { url, method, headers, body } = request;
 
         // wrap in delayed observable to simulate server api call
@@ -42,8 +40,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function authenticate() {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
-            console.log('user:');
-            console.log(user);
             if (!user) { return error('Username or password is incorrect'); }
             return ok({
                 id: user.id,

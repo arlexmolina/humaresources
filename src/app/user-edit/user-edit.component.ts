@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { AlertService } from '../_services/alert.service';
 import {AuthenticationService} from '../_services/authentication.service';
 import {UserService} from '../_services/user.service';
+import {MatDatepickerInputEvent} from "@angular/material";
 
 @Component({
   selector: 'app-user-edit',
@@ -13,10 +14,6 @@ import {UserService} from '../_services/user.service';
   styleUrls: ['./user-edit.component.css']
 })
 export class UserEditComponent implements OnInit {
-  registerForm: FormGroup;
-  loading = false;
-  submitted = false;
-  selectedGender: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,6 +32,19 @@ export class UserEditComponent implements OnInit {
     }
   }
 
+  // convenience getter for easy access to form fields
+  get f() { return this.registerForm.controls; }
+  registerForm: FormGroup;
+  loading = false;
+  submitted = false;
+  selectedGender: string;
+
+  selectedDate: Date;
+
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.selectedDate = event.value;
+  }
+
   selectChangeHandler(event: any) {
     this.selectedGender = event.target.value;
   }
@@ -45,14 +55,10 @@ export class UserEditComponent implements OnInit {
       lastName: ['', Validators.required],
       mobile: ['', Validators.required],
       dni: ['', Validators.required],
-      birthday: ['', Validators.required],
       username: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
-
-  // convenience getter for easy access to form fields
-  get f() { return this.registerForm.controls; }
 
   onSubmit() {
     this.submitted = true;
@@ -72,15 +78,23 @@ export class UserEditComponent implements OnInit {
       return;
     }
 
+    // tslint:disable-next-line:triple-equals
+    if (!this.selectedDate) {
+      this.alertService.error('Debe seleccionar la fecha de nacimiento.');
+      this.loading = false;
+      return;
+    }
+    let date: string;
+    // @ts-ignore
+    date = this.formatDate(this.selectedDate);
+
     this.loading = true;
     // tslint:disable-next-line:max-line-length
     this.userService.create(this.f.firstName.value, this.f.lastName.value, this.f.mobile.value, this.f.dni.value,
-      this.selectedGender, this.f.birthday.value, this.f.username.value, this.f.password.value)
+      this.selectedGender, date, this.f.username.value, this.f.password.value)
       .pipe(first())
       .subscribe(
         data => {
-          console.log('data');
-          console.log(data);
           if (data.error) {
             this.alertService.error(data.error);
             this.loading = false;
@@ -93,11 +107,27 @@ export class UserEditComponent implements OnInit {
           }
         },
         error => {
-          console.log('error2121');
-          console.log(error);
           this.alertService.error(error);
           this.loading = false;
         });
   }
 
+  formatDate(date) {
+    // tslint:disable-next-line:one-variable-per-declaration
+    let d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      // tslint:disable-next-line:prefer-const
+      day = '' + d.getDate(),
+      // tslint:disable-next-line:prefer-const
+      year = d.getFullYear();
+
+    if (month.length < 2) {
+      month = '0' + month;
+    }
+    if (day.length < 2) {
+      day = '0' + day;
+    }
+
+    return [year, month, day].join('-');
+  }
 }

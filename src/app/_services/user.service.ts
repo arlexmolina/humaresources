@@ -24,8 +24,6 @@ export class UserService {
   invite(email) {
     return this.http.post<any>(this.API_INVITE, { email })
       .pipe(map(data => {
-        console.log('data');
-        console.log(data);
         return data;
       }));
   }

@@ -13,13 +13,8 @@ export class JwtInterceptor implements HttpInterceptor {
         const currentUser = this.authenticationService.currentUserValue;
         let token = '';
         const values = JSON.parse(localStorage.getItem('token'));
-        console.log('values');
-        console.log(values);
         if (values) {
-          console.log('obj11');
           const obj = JSON.parse(values);
-          console.log('obj');
-          console.log(obj);
           token = obj.token;
         }
 
