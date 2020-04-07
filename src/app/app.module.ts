@@ -25,6 +25,7 @@ import {JwtInterceptor} from './_helpers/jwt.interceptor';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserInviteComponent } from './user-invite/user-invite.component';
 import { UserAddComponent } from './user-add/user-add.component';
+import { MenuUserComponent } from './menu-user/menu-user.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { UserAddComponent } from './user-add/user-add.component';
     AlertComponent,
     UserEditComponent,
     UserInviteComponent,
-    UserAddComponent
+    UserAddComponent,
+    MenuUserComponent
   ],
   imports: [
     BrowserModule,

@@ -5,9 +5,10 @@
 </mat-toolbar>
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
   <div class="navbar-nav">
-    <a class="nav-item nav-link" routerLink="/menu">Menu</a>
-    <br>
+    <a class="nav-item nav-link" routerLink="/menu" *ngIf="isAmin">Menu</a>
+    <a class="nav-item nav-link" routerLink="/menu-user" *ngIf="isUser">Menu</a>
     <a class="nav-item nav-link" (click)="logout()">Salir</a>
+    <a class="nav-item nav-link" style="right: -200px; position: relative" >Bienvenido {{userMail}}</a>
   </div>
 </nav>
 

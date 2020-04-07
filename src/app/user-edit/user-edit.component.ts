@@ -24,11 +24,11 @@ export class UserEditComponent implements OnInit {
   ) {
     this.selectedGender = '';
     if (!this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
     }
     // tslint:disable-next-line:triple-equals
     if (this.authenticationService.currentUserValue.worker.role != 'admin') {
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
     }
   }
 

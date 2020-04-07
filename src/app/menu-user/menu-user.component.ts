@@ -3,21 +3,17 @@ import {AuthenticationService} from '../_services/authentication.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  selector: 'app-menu-user',
+  templateUrl: './menu-user.component.html',
+  styleUrls: ['./menu-user.component.css']
 })
-export class MenuComponent implements OnInit {
+export class MenuUserComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
   ) {
     if (!this.authenticationService.currentUserValue) {
-      this.router.navigate(['/login']);
-    }
-    // tslint:disable-next-line:triple-equals
-    if (this.authenticationService.currentUserValue.worker.role != 'admin') {
       this.router.navigate(['/login']);
     }
   }

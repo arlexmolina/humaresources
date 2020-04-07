@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
+import { MenuUserComponent } from './menu-user/menu-user.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserAddComponent } from './user-add/user-add.component';
 import { UserInviteComponent } from './user-invite/user-invite.component';
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'menu',
     component: MenuComponent
+  },
+  {
+    path: 'menu-user',
+    component: MenuUserComponent
   },
   {
     path: 'login',
