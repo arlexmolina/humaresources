@@ -1,0 +1,15 @@
+<h2>Contrato</h2>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="form-group" >
+    <label for="profile">Contrato</label>
+    <input type="file" name="profile" (change)="onFileSelect($event)" />
+  </div>
+
+  <div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Guardar
+    </button>
+    <a routerLink="/menu" class="btn btn-link" >Cancelar</a>
+  </div>
+</form>

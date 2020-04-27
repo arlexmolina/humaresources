@@ -1,31 +1,43 @@
-<h2>Registrar</h2>
+<h2>Usuario</h2>
+<img mat-list-avatar src="{{user.photo}}" alt="{{user.photo}}" style="height:200px; Width:200px" >
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+
+
   <div class="form-group">
     <label for="firstName">Nombres</label>
-    <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+    <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" [(ngModel)]="user.names" />
     <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
       <div *ngIf="f.firstName.errors.required">Nombres es un campo obligatorio</div>
     </div>
   </div>
   <div class="form-group">
     <label for="lastName">Apellidos</label>
-    <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+    <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" [(ngModel)]="user.last_names" />
     <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
       <div *ngIf="f.lastName.errors.required">Apellidos es un campo obligatorio</div>
     </div>
   </div>
   <div class="form-group">
     <label for="mobile">Celular</label>
-    <input type="text" formControlName="mobile" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" />
+    <input type="text" formControlName="mobile" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" [(ngModel)]="user.mobile" />
     <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
       <div *ngIf="f.mobile.errors.required">Telefono es un campo obligatorio</div>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" *ngIf="userAdmin" >
     <label for="dni">Dni</label>
-    <input type="text" formControlName="dni" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dni.errors }" />
+    <input type="text" formControlName="dni" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dni.errors }" [(ngModel)]="user.dni" />
     <div *ngIf="submitted && f.dni.errors" class="invalid-feedback">
       <div *ngIf="f.dni.errors.required">Dni es un campo obligatorio</div>
+    </div>
+  </div>
+
+  <div class="form-group" *ngIf="userAdmin" >
+    <label for="salary">Salario</label>
+    <input type="text" formControlName="salary" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.salary.errors }" [(ngModel)]="user.salary" />
+    <div *ngIf="submitted && f.salary.errors" class="invalid-feedback">
+      <div *ngIf="f.salary.errors.required">Salario es un campo obligatorio</div>
     </div>
   </div>
   <!--
@@ -48,7 +60,7 @@
     <br>
   </div>
   <!--<div class="form-group">
-    <label for="birthday">Fecha de naciemiento</label>
+    <label for="birthday">Fecha de nacimiento</label>
     <input type="text" formControlName="birthday" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.birthday.errors }" />
     <div *ngIf="submitted && f.birthday.errors" class="invalid-feedback">
       <div *ngIf="f.birthday.errors.required">Telefono es un campo obligatorio</div>
@@ -56,7 +68,7 @@
   </div>-->
 
   <div class="form-group">
-    <label for="birthday">Fecha de naciemiento</label>
+    <label for="birthday">Fecha de nacimiento</label>
     <br>
     <mat-form-field>
       <input matInput [matDatepicker]="picker" placeholder="Fecha"
@@ -68,13 +80,13 @@
 
   <div class="form-group">
     <label for="username">Email</label>
-    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+    <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" [(ngModel)]="user.email" />
     <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
       <div *ngIf="f.username.errors.required">Email es un campo obligatorio</div>
       <div *ngIf="f.username.errors.pattern">Email debe ser un correo</div>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" *ngIf="edited" >
     <label for="password">Clave</label>
     <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
@@ -82,11 +94,29 @@
       <div *ngIf="f.password.errors.minlength">La clave debe contener al menos 6 caracteres</div>
     </div>
   </div>
+
+
+  <div class="form-group" >
+    <label for="profile">Foto</label>
+    <input type="file" name="profile" (change)="onFileSelect($event)" />
+  </div>
+
+  <div class="form-group" *ngIf="!contract" >
+    <a  [routerLink]="['/load-contract', user._id]" class="btn btn-link" *ngIf="userAdmin" >Cargar contrato</a>
+  </div>
+  <div class="form-group" *ngIf="contract" >
+    <a href="{{user.contract}}" target="_blank">Contrato</a>
+  </div>
+  <div class="form-group" >
+    <a  [routerLink]="['/finish-contract', user._id]" class="btn btn-link" *ngIf="userAdmin" >Terminar contrato</a>
+  </div>
+
   <div class="form-group">
     <button [disabled]="loading" class="btn btn-primary">
       <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-      Registrar
+      Guardar
     </button>
-    <a routerLink="/menu" class="btn btn-link">Cancelar</a>
+    <a routerLink="/menu" class="btn btn-link" *ngIf="userAdmin" >Cancelar</a>
+    <a routerLink="/menu-user" class="btn btn-link" *ngIf="!userAdmin" >Cancelar</a>
   </div>
 </form>

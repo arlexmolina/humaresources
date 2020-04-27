@@ -10,11 +10,11 @@ import {Subscription} from 'rxjs';
 import {MatDatepickerInputEvent} from '@angular/material';
 
 @Component({
-  selector: 'app-user-add',
-  templateUrl: './user-add.component.html',
-  styleUrls: ['./user-add.component.css']
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.css']
 })
-export class UserAddComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,7 +24,6 @@ export class UserAddComponent implements OnInit {
     private alertService: AlertService,
     private route: ActivatedRoute
   ) {
-    this.selectedGender = '';
   }
 
   // convenience getter for easy access to form fields
@@ -34,29 +33,17 @@ export class UserAddComponent implements OnInit {
   submitted = false;
   sub: Subscription;
   tokenParam: string;
-  selectedGender: string;
-  selectedDate: Date;
-
-  selectChangeHandler(event: any) {
-    this.selectedGender = event.target.value;
-  }
-
-  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.selectedDate = event.value;
-  }
 
   ngOnInit() {
     this.sub = this.route.queryParams.subscribe(params => {
+      console.log('params');
+      console.log(params);
       const token = params.token;
       if (token) {
         this.tokenParam = token;
         this.registerForm = this.formBuilder.group({
-          firstName: ['', Validators.required],
-          lastName: ['', Validators.required],
-          mobile: ['', Validators.required],
-          dni: ['', Validators.required],
-          username: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-          password: ['', [Validators.required, Validators.minLength(6)]]
+          password: ['', [Validators.required, Validators.minLength(6)]],
+          password2: ['', [Validators.required, Validators.minLength(6)]]
         });
       }
     });
@@ -74,28 +61,15 @@ export class UserAddComponent implements OnInit {
     }
 
     // tslint:disable-next-line:triple-equals
-    if (this.selectedGender == '') {
-      this.alertService.error('Debe seleccionar el genero.');
+    if (this.f.password.value != this.f.password2.value) {
+      this.alertService.error('Las contraseñas no coinciden.');
       this.loading = false;
       return;
     }
-
-    // tslint:disable-next-line:triple-equals
-    if (!this.selectedDate) {
-      this.alertService.error('Debe seleccionar la fecha de nacimiento.');
-      this.loading = false;
-      return;
-    }
-    let date: string;
-    // @ts-ignore
-    date = this.formatDate(this.selectedDate);
 
     this.loading = true;
-    const tokenLS = '{"token":"' + this.tokenParam + '"}';
-    localStorage.setItem('token', JSON.stringify(tokenLS));
     // tslint:disable-next-line:max-line-length
-    this.userService.create(this.f.firstName.value, this.f.lastName.value, this.f.mobile.value, this.f.dni.value, 0,
-      this.selectedGender, date, this.f.username.value, this.f.password.value)
+    this.userService.resetPassword(this.f.password.value, this.tokenParam)
       .pipe(first())
       .subscribe(
         data => {
@@ -114,25 +88,6 @@ export class UserAddComponent implements OnInit {
           this.alertService.error(error);
           this.loading = false;
         });
-  }
-
-  formatDate(date) {
-    // tslint:disable-next-line:one-variable-per-declaration
-    let d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      // tslint:disable-next-line:prefer-const
-      day = '' + d.getDate(),
-      // tslint:disable-next-line:prefer-const
-      year = d.getFullYear();
-
-    if (month.length < 2) {
-      month = '0' + month;
-    }
-    if (day.length < 2) {
-      day = '0' + day;
-    }
-
-    return [year, month, day].join('-');
   }
 
 }

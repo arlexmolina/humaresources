@@ -26,6 +26,11 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserInviteComponent } from './user-invite/user-invite.component';
 import { UserAddComponent } from './user-add/user-add.component';
 import { MenuUserComponent } from './menu-user/menu-user.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LoadContractComponent } from './load-contract/load-contract.component';
+import { FinishContractComponent } from './finish-contract/finish-contract.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +41,12 @@ import { MenuUserComponent } from './menu-user/menu-user.component';
     UserEditComponent,
     UserInviteComponent,
     UserAddComponent,
-    MenuUserComponent
+    MenuUserComponent,
+    UserListComponent,
+    ResetPasswordComponent,
+    ForgotPasswordComponent,
+    LoadContractComponent,
+    FinishContractComponent
   ],
   imports: [
     BrowserModule,
