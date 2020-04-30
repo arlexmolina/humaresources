@@ -1,0 +1,60 @@
+<h2>Usuario</h2>
+<img mat-list-avatar src="{{user.photo}}" alt="{{user.photo}}" style="height:200px; Width:200px" >
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+    <label >Nombres: </label>
+    <label >{{user.names}}</label>
+  </div>
+  <div class="form-group">
+    <label >Apellidos: </label>
+    <label >{{user.last_names}}</label>
+  </div>
+  <div class="form-group">
+    <label >Celular: </label>
+    <label >{{user.mobile}}</label>
+  </div>
+  <div class="form-group">
+    <label >Dni:</label>
+    <label >{{user.dni}}</label>
+  </div>
+  <div class="form-group"  *ngIf="userAdmin">
+    <label >Salario:</label>
+    <label >{{user.salary}}</label>
+  </div>
+  <div class="form-group"  >
+    <label >Genero:</label>
+    <label >{{user.gender}}</label>
+  </div>
+  <div class="form-group"  >
+    <label >Fecha de nacimiento:</label>
+    <label >{{user.birthday}}</label>
+  </div>
+  <div class="form-group"  >
+    <label >Email:</label>
+    <label >{{user.email}}</label>
+  </div>
+
+  <div class="form-group" *ngIf="!edited" >
+
+    <div class="form-group" *ngIf="!contract" >
+      <a  [routerLink]="['/load-contract', user._id]" class="btn btn-link" *ngIf="userAdmin" >Cargar contrato</a>
+    </div>
+    <div class="form-group" *ngIf="contract" >
+      <a href="{{user.contract}}" target="_blank">Contrato</a>
+    </div>
+    <div class="form-group" >
+      <a  [routerLink]="['/finish-contract', user._id]" class="btn btn-link" *ngIf="userAdmin" >Terminar contrato</a>
+    </div>
+
+  </div>
+
+  <div class="form-group">
+    <button [disabled]="loading" class="btn btn-primary" [routerLink]="['/user-edit/'+user._id]">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1" [routerLink]="['/user-edit', user._id]" ></span>
+      Editar
+    </button>
+    <a routerLink="/menu" class="btn btn-link" *ngIf="userAdmin" >Cancelar</a>
+    <a routerLink="/menu-user" class="btn btn-link" *ngIf="!userAdmin" >Cancelar</a>
+  </div>
+</form>

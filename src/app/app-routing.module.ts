@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
 import { MenuUserComponent } from './menu-user/menu-user.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { UserViewComponent } from './user-view/user-view.component';
 import { UserAddComponent } from './user-add/user-add.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserInviteComponent } from './user-invite/user-invite.component';
@@ -34,6 +35,10 @@ const routes: Routes = [
   {
     path: 'user-edit/:id',
     component: UserEditComponent
+  },
+  {
+    path: 'user-view/:id',
+    component: UserViewComponent
   },
   {
     path: 'load-contract/:id',

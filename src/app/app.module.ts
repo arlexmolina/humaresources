@@ -31,6 +31,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LoadContractComponent } from './load-contract/load-contract.component';
 import { FinishContractComponent } from './finish-contract/finish-contract.component';
+import { UserViewComponent } from './user-view/user-view.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { FinishContractComponent } from './finish-contract/finish-contract.compo
     ResetPasswordComponent,
     ForgotPasswordComponent,
     LoadContractComponent,
-    FinishContractComponent
+    FinishContractComponent,
+    UserViewComponent
   ],
   imports: [
     BrowserModule,

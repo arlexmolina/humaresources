@@ -95,20 +95,22 @@
     </div>
   </div>
 
+  <div class="form-group" *ngIf="!edited" >
 
-  <div class="form-group" >
-    <label for="profile">Foto</label>
-    <input type="file" name="profile" (change)="onFileSelect($event)" />
-  </div>
+    <div class="form-group" >
+      <label for="profile">Foto</label>
+      <input type="file" name="profile" (change)="onFileSelect($event)" />
+    </div>
+    <div class="form-group" *ngIf="!contract" >
+      <a  [routerLink]="['/load-contract', user._id]" class="btn btn-link" *ngIf="userAdmin" >Cargar contrato</a>
+    </div>
+    <div class="form-group" *ngIf="contract" >
+      <a href="{{user.contract}}" target="_blank">Contrato</a>
+    </div>
+    <div class="form-group" >
+      <a  [routerLink]="['/finish-contract', user._id]" class="btn btn-link" *ngIf="userAdmin" >Terminar contrato</a>
+    </div>
 
-  <div class="form-group" *ngIf="!contract" >
-    <a  [routerLink]="['/load-contract', user._id]" class="btn btn-link" *ngIf="userAdmin" >Cargar contrato</a>
-  </div>
-  <div class="form-group" *ngIf="contract" >
-    <a href="{{user.contract}}" target="_blank">Contrato</a>
-  </div>
-  <div class="form-group" >
-    <a  [routerLink]="['/finish-contract', user._id]" class="btn btn-link" *ngIf="userAdmin" >Terminar contrato</a>
   </div>
 
   <div class="form-group">

@@ -5,7 +5,7 @@
       <mat-list-item *ngFor="let user of users">
         <img mat-list-avatar src="{{user.photo}}" alt="{{user.photo}}">
         <h3 mat-line>
-          <a mat-button [routerLink]="['/user-edit', user._id]" >{{user.names + ' - ' + user.last_names}}</a>
+          <a mat-button [routerLink]="['/user-view', user._id]" >{{user.names + ' - ' + user.last_names}}</a>
         </h3>
       </mat-list-item>
     </mat-list>
